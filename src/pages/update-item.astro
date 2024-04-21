@@ -1,0 +1,33 @@
+---
+import { db, Todos, Categories, eq, not } from 'astro:db';
+import Card from '../components/Card.astro';
+
+let taskId = 0;
+let title = '';
+let body = '';
+let done = false;
+
+if (Astro.request.method === 'PATCH') {
+    const formData = await Astro.request.formData();
+    const itemId = Number( formData.get('itemId') );
+    if (typeof itemId === 'number') {
+        const updatedRecord = await db.update(Todos)
+            .set({ done: not(Todos.done) }) // https://orm.drizzle.team/learn/guides/toggling-a-boolean-field
+            .where(eq(Todos.id, itemId))
+            .returning();
+
+            taskId = updatedRecord[0].id;
+            body = updatedRecord[0].task;
+            done = updatedRecord[0].done;
+            const result = await db.select().from(Categories).where(eq(Categories.id, updatedRecord[0].catId));
+            title = result[0].category;
+    }
+}
+---
+
+<Card
+    id={taskId}
+    title={title}
+    body={body}
+    done={done}
+/>

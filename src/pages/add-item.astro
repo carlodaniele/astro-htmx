@@ -1,0 +1,50 @@
+---
+import { db, Todos, Categories, eq } from 'astro:db';
+import Card from '../components/Card.astro';
+
+let taskId = 0;
+let title = '';
+let body = '';
+let done = false;
+
+if (Astro.request.method === 'POST') {
+  // parse form data
+  const formData = await Astro.request.formData();
+  const task = formData.get('task');
+  // If the number is NaN or -0, it's returned as 0
+  // so catId defaults to 0
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
+  const catId = Number( formData.get('category') );
+  
+  if (typeof catId === 'number' && typeof task === 'string' && task.length > 0 ) {
+  // if (typeof task === 'string' && typeof catId === 'number') {
+
+    // insert form data into the Todos table
+    // https://orm.drizzle.team/docs/insert
+    // https://orm.drizzle.team/docs/insert#insert-returning
+    const lastRecord = await db.insert(Todos).values({ task, catId, done }).returning();
+    taskId = lastRecord[0].id;
+    body = lastRecord[0].task;
+    const result = await db.select().from(Categories).where(eq(Categories.id, lastRecord[0].catId));
+    title = result[0].category;
+  } else {
+    // https://docs.astro.build/en/guides/server-side-rendering/#response
+    const response = new Response(null, {
+      status: 302,
+      statusText: 'Not found',
+      headers: {
+        'Location': '/error'
+      }
+    });
+    console.log("Errore nell'inserimento dei campi del form - " + response);
+    return response;
+  }
+}
+---
+
+<Card
+    id={taskId}
+    title={title}
+    body={body}
+    done={done}
+/>

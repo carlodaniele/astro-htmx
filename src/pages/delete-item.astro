@@ -1,0 +1,12 @@
+---
+import { db, Todos, eq } from 'astro:db';
+
+// https://orm.drizzle.team/docs/delete
+if (Astro.request.method === 'DELETE') {
+    const formData = await Astro.request.formData();
+    const itemId = Number( formData.get('itemId') );
+    if (typeof itemId === 'number') {
+        await db.delete(Todos).where(eq(Todos.id, itemId));
+    }
+}
+---
