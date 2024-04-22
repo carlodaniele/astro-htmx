@@ -9,5 +9,7 @@ export default defineConfig({
   output: "server",
   adapter: node({
     mode: "standalone"
-  })
+  }),
+  site: 'https://carlodaniele.github.io',
+  base: 'astro-htmx',
 });
