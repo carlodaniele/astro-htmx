@@ -2,6 +2,7 @@
   "name": "todo",
   "type": "module",
   "version": "0.0.1",
+  "private": true,
   "scripts": {
     "dev": "astro dev",
     "start": "node ./dist/server/entry.mjs",
