@@ -6,6 +6,8 @@ Questa applicazione è basata sul framework [Astro](https://astro.build/). Per l
 
 Prima di procedere allo sviluppo dell'app, è necessario creare un account su [Astro Studio](https://studio.astro.build/), leggere la [documentazione](https://docs.astro.build/en/guides/astro-db/) e familiarizzare con la piattaforma.
 
+👉 L'applicazione può essere testata a [questo link](https://astro-htmx-r063g.kinsta.app/).
+
 👉 La guida completa allo sviluppo di questa applicazione è disponibile su [HTML.it](https://www.html.it/guide/creare-una-web-app-con-htmx-e-astro-db/).
 
 👉 Per il deploy è stato utilizzato il servizio di hosting di applicazioni di [Kinsta](https://kinsta.com/it/hosting-applicazioni/).
