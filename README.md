@@ -11,7 +11,7 @@ Prima di procedere allo sviluppo dell'app, è necessario creare un account su [A
 👉 Per il deploy è stato utilizzato il servizio di hosting di applicazioni di [Kinsta](https://kinsta.com/it/hosting-applicazioni/).
 
 ## 🛠️ Configurazione
-Astro DB richiede l'abilitazione del [Server Side Rendering](https://docs.astro.build/en/guides/server-side-rendering/) (SSR) e l'installazione del [node adapter](https://docs.astro.build/en/guides/integrations-guide/node/).
+Astro DB richiede l'abilitazione del [Server Side Rendering](https://docs.astro.build/en/guides/server-side-rendering/) (SSR). Per questa applicazione, si fa ricorso al [node adapter](https://docs.astro.build/en/guides/integrations-guide/node/).
 
 Nel file `astro.config.mjs` andrà aggiunto il seguente codice:
 
