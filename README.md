@@ -1,54 +1,90 @@
-# Astro Starter Kit: Basics
+# To-do list con Astro DB e htmx
 
-```sh
-npm create astro@latest -- --template basics
+Questa applicazione è basata sul framework [Astro](https://astro.build/). Per la gestione dei dati si fa ricorso ad [Astro DB](https://astro.build/db/), mentre le funzionalità di [htmx](https://htmx.org/) permettono di eseguire operazioni CRUD sui dati.
+
+![astrobd-htmx](https://raw.githubusercontent.com/carlodaniele/astro-htmx/main/assets/astrodb-htmx-app.jpg)
+
+Prima di procedere allo sviluppo dell'app, è necessario creare un account su [Astro Studio](https://studio.astro.build/), leggere la [documentazione](https://docs.astro.build/en/guides/astro-db/) e familiarizzare con la piattaforma.
+
+La guida completa allo sviluppo di questa applicazione è disponibile su [HTML.it](https://www.html.it/guide/creare-una-web-app-con-htmx-e-astro-db/).
+
+Per il deploy è stato utilizzato il servizio di hosting di applicazioni di [Kinsta](https://kinsta.com/it/hosting-applicazioni/).
+
+## 🛠️ Configurazione
+Astro DB richiede l'abilitazione del Server Side Rendering (SSR).
+
+Nel file `astro.config.mjs` andrà aggiunto il seguente codice:
+
+```js
+export default defineConfig({
+	integrations: [db()],
+	site: 'https://astro-htmx-r063g.kinsta.app/',
+	output: "server",
+	adapter: node({
+		mode: "standalone"
+	}),
+	server: {
+		host: true
+	}
+});
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+Nel file `package.json` andrà aggiunto il flag `--remote` allo script di build:
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+```json
+"scripts": {
+	"dev": "astro dev",
+	"start": "node ./dist/server/entry.mjs",
+	"build": "astro build --remote",
+	"preview": "astro preview",
+	"astro": "astro"
+},
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Il resto della configurazione di questa app è specifico dell'hosting Kinsta. È necessario creare un file `sandbox.config.json`:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```json
+{
+	"infiniteLoopProtection": true,
+	"hardReloadOnChange": false,
+	"view": "browser",
+	"template": "node",
+	"container": {
+		"port": 8080,
+		"startScript": "start",
+		"node": "14"
+	}
+}
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+Quindi un file `.stackblitzrc`:
 
-## 🧞 Commands
+```json
+{
+	"startCommand": "npm start",
+	"env": {
+		"ENABLE_CJS_IMPORTS": true
+	}
+}
+```
 
-All commands are run from the root of the project, from a terminal:
+Infine, un file `.npmrc`:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```js
+shamefully-hoist=true
+```
 
-## 👀 Want to learn more?
+Per configurazioni diverse, si consulti la [documentazione di Astro](https://docs.astro.build/en/guides/deploy/).
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 🌎 Distribuzione su Kinsta
+
+In MyKinsta, fare clic su `Applicazioni` > `Aggiungi applicazione` > seleziona `repository Git` > `Public repository`, quindi procedere come segue:
+
+1. Repository URL: `https://github.com/tuo-account/tuo-repository`
+2. Branch: `main`
+
+Immettere il nome dell'applicazione e scegliere la posizione del data center. Lasciare tutte le altre impostazioni come predefinite e fare clic su Continua ad ogni passaggio.
+
+Nel passaggio Riepilogo, fare clic su Distribuisci ora.
+
+Maggiori informazioni sul [deploy di applicazioni Astro SSR su Kinsta](https://kinsta.com/docs/application-hosting/app-quick-start/javascript-examples/#astro-ssr).
