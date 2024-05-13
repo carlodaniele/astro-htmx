@@ -78,6 +78,8 @@ Per configurazioni diverse, si consulti la [documentazione di Astro](https://doc
 
 ## 🌎 Distribuzione su Kinsta
 
+![application-add-git-repo](https://kinsta.com/_next/image/?url=https%3A%2F%2Fkinsta.com%2Fwp-content%2Fuploads%2F2024%2F04%2Fapplication-add-git-repo-675x1024.png&w=1920&q=75)
+
 In MyKinsta, fare clic su `Applicazioni` > `Aggiungi applicazione` > seleziona `repository Git` > `Public repository`, quindi procedere come segue:
 
 1. Repository URL: `https://github.com/tuo-account/tuo-repository`
