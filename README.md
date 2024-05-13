@@ -41,7 +41,7 @@ Nel file `package.json` andrà aggiunto il flag `--remote` allo script di build:
 },
 ```
 
-Il resto della configurazione di questa app è specifico dell'hosting Kinsta. È necessario creare un file `sandbox.config.json`:
+Il resto della configurazione di questa app è **specifico dell'hosting Kinsta**. È necessario creare un file `sandbox.config.json`:
 
 ```json
 {
